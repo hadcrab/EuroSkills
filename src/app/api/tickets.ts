@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Ticket, TicketRequest } from '../types/api';
 
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: 'https://apic.polytech.kz/api/v1',
   headers: { 'Content-Type': 'application/json' },
 });
 

@@ -1,10 +1,5 @@
-import axios from 'axios';
+import api from '@/lib/api';
 import { Concert, Row, Reservation, Ticket, ReservationRequest, BookingRequest } from '../types/api';
-
-const api = axios.create({
-  baseURL: '/api/v1',
-  headers: { 'Content-Type': 'application/json' },
-});
 
 export const getConcerts = async (): Promise<Concert[]> => {
   const response = await api.get('/concerts');
