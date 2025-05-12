@@ -23,6 +23,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       lucide-react:
         specifier: ^0.509.0
         version: 0.509.0(react@19.1.0)
@@ -51,6 +54,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.6
+      '@types/date-fns':
+        specifier: ^2.6.3
+        version: 2.6.3
       '@types/node':
         specifier: ^20
         version: 20.17.46
@@ -818,6 +824,10 @@ packages:
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
+  '@types/date-fns@2.6.3':
+    resolution: {integrity: sha512-Ke1lw2Ni1t/wMUoLtKFmSNCLozcTBd6vmMqFP4hRzXn6qzkNt97bPAX0x5Y/c15DP43kKvwW1ycStD5+43jVQA==}
+    deprecated: This is a stub types definition. date-fns provides its own type definitions, so you do not need this installed.
+
   '@types/node@20.17.46':
     resolution: {integrity: sha512-0PQHLhZPWOxGW4auogW0eOQAuNIlCYvibIpG67ja0TOJ6/sehu+1en7sfceUn+QQtx4Rk3GxbLNwPh0Cav7TWw==}
 
@@ -1159,6 +1169,9 @@ packages:
   datasette@1.0.1:
     resolution: {integrity: sha512-aJdlCBToEJUP4M57r67r4V6tltwGKa3qetnjpBtXYIlqbX9tM9jsoDMxb4xd9AGjpp3282oHRmqI5Z8TVAU0Mg==}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -3390,6 +3403,10 @@ snapshots:
 
   '@types/cookie@0.6.0': {}
 
+  '@types/date-fns@2.6.3':
+    dependencies:
+      date-fns: 4.1.0
+
   '@types/node@20.17.46':
     dependencies:
       undici-types: 6.19.8
@@ -3758,6 +3775,8 @@ snapshots:
       comparejs: 1.0.0
       eventemitter2: 5.0.1
       lodash: 4.17.5
+
+  date-fns@4.1.0: {}
 
   debug@2.6.9:
     dependencies:
