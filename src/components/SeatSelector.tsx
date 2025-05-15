@@ -99,7 +99,7 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({ concertId, showId }) => {
           </div>
         </div>
       ))}
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h3>Выбранные места</h3>
         {selectedSeats.length === 0 ? (
           <p>Места не выбраны. Нажмите на место, чтобы зарезервировать.</p>
@@ -112,7 +112,7 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({ concertId, showId }) => {
             ))}
           </ul>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

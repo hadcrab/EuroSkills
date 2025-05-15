@@ -34,14 +34,19 @@ const TicketsPage: React.FC = () => {
     }
   };
 
-  const handleTicketCanceled = async (ticketId: number) => {
-    if (!code.trim() || !name.trim()) {
-      setError('Пожалуйста, введите код билета и имя перед отменой.');
+  const handleTicketCanceled = async (ticketId: number, ticketCode: string) => {
+    if (!name.trim()) { 
+      setError('Пожалуйста, введите имя.');
+      setShowError(true);
+      return;
+    }
+    if (!tickets.length) {
+      setError('Список билетов пуст. Загрузите билеты сначала.');
       setShowError(true);
       return;
     }
     try {
-      await cancelTicket(ticketId, code, name);
+      await cancelTicket(ticketId, ticketCode, name);
       setTickets((prev: Ticket[]) => prev.filter((ticket: Ticket) => ticket.id !== ticketId));
     } catch (err: any) {
       setError('Не удалось отменить билет: ' + (err.message || 'Неизвестная ошибка'));
@@ -96,7 +101,7 @@ const TicketsPage: React.FC = () => {
               <TicketDisplay
                 key={ticket.id}
                 ticket={ticket}
-                onCancel={handleTicketCanceled}
+                onCancel={(ticketId) => handleTicketCanceled(ticketId, ticket.code)}
               />
             ))}
           </div>
