@@ -1,16 +1,18 @@
-import axios from 'axios';
 import { Ticket, TicketRequest } from '../types/api';
+import api from '@/lib/api';
+import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'https://apic.polytech.kz/api/v1',
-  headers: { 'Content-Type': 'application/json' },
-});
-
-export const getTickets = async (data: TicketRequest): Promise<Ticket[]> => {
-  const response = await api.post('/tickets', data);
+export const getTickets = async (code: string, name: string): Promise<Ticket[]> => {
+  const response = await api.post('/tickets', { code, name });
   return response.data.tickets;
 };
 
-export const cancelTicket = async (ticketId: number, data: TicketRequest): Promise<void> => {
-  await api.post(`/tickets/${ticketId}/cancel`, data);
+export const createTicket = async (data: { concert_id: number; show_id: number; user_id: string }): Promise<any> => {
+  const response = await api.post(`/tickets`, data);
+  return response.data.ticket;
+};
+
+export const cancelTicket = async (ticketId: number, code: string, name: string ): Promise<void> => {
+  await api.post(`/tickets/${ticketId}/cancel`, { code, name });
+  alert(`Билет с кодом ${code} отменен.`);
 };

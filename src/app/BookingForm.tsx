@@ -1,11 +1,8 @@
-/**
- * File: src/app/components/BookingForm.tsx
- */
 'use client';
 import { useState } from 'react';
 import { useReservationStore } from './store/reservationStore';
 import { bookTickets } from './api/concerts';
-import { BookingRequest, ErrorResponse } from './types/api';
+import { BookingRequest, BookingResult, ErrorResponse } from './types/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -15,8 +12,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 interface BookingFormProps {
   concertId: number;
   showId: number;
-  onBookingSuccess: (tickets: any[]) => void;
+  onBookingSuccess: (result: { code: string; name: string }) => void;
 }
+
 
 const BookingForm: React.FC<BookingFormProps> = ({ concertId, showId, onBookingSuccess }) => {
   const { reservation, selectedSeats } = useReservationStore();
@@ -113,7 +111,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ concertId, showId, onBookingS
         country: formData.country!,
       };
       const tickets = await bookTickets(concertId, showId, bookingData);
-      onBookingSuccess(tickets);
+      onBookingSuccess(tickets); 
       setApiError(null);
       setFormData({ name: '', address: '', city: '', zip: '', country: '' });
     } catch (err: any) {
