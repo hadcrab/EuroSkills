@@ -1,6 +1,5 @@
 'use client';
 import Header from '@/components/Header';
-import TicketForm from '@/app/TicketForm';
 import TicketDisplay from '@/app/TicketDisplay';
 import { cancelTicket } from '../api/tickets';
 import { useTickets } from '@/hooks/useTickets';
@@ -8,20 +7,41 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Ticket } from '@/app/types/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const TicketsPage: React.FC = () => {
   const { tickets, setTickets, loading, error, setError, fetchTickets, code, setCode, name, setName } = useTickets();
   const [showError, setShowError] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const urlCode = searchParams.get('code');
+    const urlName = searchParams.get('name');
+    if (urlCode && urlName) {
+      setCode(decodeURIComponent(urlCode));
+      setName(decodeURIComponent(urlName));
+      const fetchOnMount = async () => {
+        setShowError(false);
+        try {
+          await fetchTickets();
+        } catch (err: any) {
+          setError('Не удалось загрузить билеты: ' + (err.message || 'Неизвестная ошибка'));
+          setShowError(true);
+        }
+      };
+      fetchOnMount();
+    }
+  }, [searchParams, setCode, setName]);
 
   const handleFetchTickets = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!code.trim() || !name.trim()) {
       setError('Пожалуйста, введите код билета и имя.');
-      setShowError(true); 
+      setShowError(true);
       return;
     }
-    setShowError(false); 
+    setShowError(false);
     try {
       await fetchTickets();
       if (tickets.length === 0 && !error) {
@@ -30,12 +50,12 @@ const TicketsPage: React.FC = () => {
       }
     } catch (err: any) {
       setError('Не удалось загрузить билеты: ' + (err.message || 'Неизвестная ошибка'));
-      setShowError(true); 
+      setShowError(true);
     }
   };
 
   const handleTicketCanceled = async (ticketId: number, ticketCode: string) => {
-    if (!name.trim()) { 
+    if (!name.trim()) {
       setError('Пожалуйста, введите имя.');
       setShowError(true);
       return;
@@ -80,9 +100,9 @@ const TicketsPage: React.FC = () => {
                 placeholder="Введите ваше имя (например, John Doe)"
               />
             </div>
-            {/* <Button type="submit" disabled={loading || !code.trim() || !name.trim()}>
+            <Button type="submit" disabled={loading || !code.trim() || !name.trim()}>
               {loading ? 'Загрузка...' : 'Показать билеты'}
-            </Button> */}
+            </Button>
           </form>
         </div>
 
@@ -91,7 +111,7 @@ const TicketsPage: React.FC = () => {
             <p>{error}</p>
           </div>
         )}
-        {loading && <p>Загрузка...</p>} 
+        {loading && <p>Загрузка...</p>}
         {!loading && tickets.length === 0 && code.trim() && name.trim() && !showError && (
           <p>Билеты не найдены. Проверьте код и имя.</p>
         )}

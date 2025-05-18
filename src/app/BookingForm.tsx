@@ -8,13 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useRouter } from 'next/navigation';
 
 interface BookingFormProps {
   concertId: number;
   showId: number;
   onBookingSuccess: (result: { code: string; name: string }) => void;
 }
-
 
 const BookingForm: React.FC<BookingFormProps> = ({ concertId, showId, onBookingSuccess }) => {
   const { reservation, selectedSeats } = useReservationStore();
@@ -27,60 +27,61 @@ const BookingForm: React.FC<BookingFormProps> = ({ concertId, showId, onBookingS
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [apiError, setApiError] = useState<string | null>(null);
+  const router = useRouter();
 
   const countries = [
-  'Albania',
-  'Andorra',
-  'Armenia',
-  'Austria',
-  'Azerbaijan',
-  'Belarus',
-  'Belgium',
-  'Bosnia and Herzegovina',
-  'Bulgaria',
-  'Croatia',
-  'Cyprus',
-  'Czech Republic',
-  'Denmark',
-  'Estonia',
-  'Finland',
-  'France',
-  'Georgia',
-  'Germany',
-  'Greece',
-  'Hungary',
-  'Iceland',
-  'Ireland',
-  'Italy',
-  'Kazakhstan',
-  'Kosovo',
-  'Latvia',
-  'Liechtenstein',
-  'Lithuania',
-  'Luxembourg',
-  'Malta',
-  'Moldova',
-  'Monaco',
-  'Montenegro',
-  'Netherlands',
-  'North Macedonia',
-  'Norway',
-  'Poland',
-  'Portugal',
-  'Romania',
-  'Russia',
-  'San Marino',
-  'Serbia',
-  'Slovakia',
-  'Slovenia',
-  'Spain',
-  'Sweden',
-  'Switzerland',
-  'Turkey',
-  'Ukraine',
-  'United',
-  'Vatican City'
-];;
+    'Albania',
+    'Andorra',
+    'Armenia',
+    'Austria',
+    'Azerbaijan',
+    'Belarus',
+    'Belgium',
+    'Bosnia and Herzegovina',
+    'Bulgaria',
+    'Croatia',
+    'Cyprus',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Georgia',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Italy',
+    'Kazakhstan',
+    'Kosovo',
+    'Latvia',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Malta',
+    'Moldova',
+    'Monaco',
+    'Montenegro',
+    'Netherlands',
+    'North Macedonia',
+    'Norway',
+    'Poland',
+    'Portugal',
+    'Romania',
+    'Russia',
+    'San Marino',
+    'Serbia',
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Sweden',
+    'Switzerland',
+    'Turkey',
+    'Ukraine',
+    'United',
+    'Vatican City',
+  ];
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -111,9 +112,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ concertId, showId, onBookingS
         country: formData.country!,
       };
       const tickets = await bookTickets(concertId, showId, bookingData);
-      onBookingSuccess(tickets); 
+      onBookingSuccess(tickets);
       setApiError(null);
       setFormData({ name: '', address: '', city: '', zip: '', country: '' });
+      router.push(`/tickets?code=${encodeURIComponent(tickets.code)}&name=${encodeURIComponent(tickets.name)}`);
     } catch (err: any) {
       const errorResponse: ErrorResponse = err.response?.data || {
         error: 'Не удалось создать билеты',

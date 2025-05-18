@@ -1,11 +1,9 @@
-/**
- * File: src/app/booking/[concertId]/[showId]/page.tsx
- */
 'use client';
 import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import SeatSelector from '@/components/SeatSelector';
 import BookingForm from '@/app/BookingForm';
+
 
 const BookingPage: React.FC = () => {
   const router = useRouter();

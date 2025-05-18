@@ -39,7 +39,7 @@ export const bookTickets = async (
   }
 
   const { code, name } = tickets[0];
-  alert(`Ваши билеты: ${tickets.map((ticket: Ticket) => `Код: ${ticket.code}, Имя: ${ticket.name}`).join('\n')}`);
+  // alert(`Ваши билеты: ${tickets.map((ticket: Ticket) => `Код: ${ticket.code}, Имя: ${ticket.name}`).join('\n')}`);
 
   return { code, name };
 };
